@@ -7,26 +7,25 @@ const withAuth = require('../../utils/auth');
 router.get('/', (req, res) => {
     console.log('======================');
     Post.findAll({
-        attributes: [
-            'id',
-            'post_url',
-            'title',
-            'created_at',
-            [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)'), 'vote_count']
-        ],
-        include: [
-            {
-                model: User,
-                attributes: ['username']
-            }
-        ]
+      attributes: [
+        'id',
+        'user_text',
+        'title',
+        'created_at'
+      ],
+      include: [
+        {
+          model: User,
+          attributes: ['username']
+        }
+      ]
     })
-        .then(dbPostData => res.json(dbPostData))
-        .catch(err => {
-            console.log(err);
-            res.status(500).json(err);
-        });
-});
+      .then(dbPostData => res.json(dbPostData))
+      .catch(err => {
+        console.log(err);
+        res.status(500).json(err);
+      });
+  });
 
 // get single post
 router.get('/:id', (req, res) => {
@@ -36,10 +35,9 @@ router.get('/:id', (req, res) => {
         },
         attributes: [
             'id',
-            'post_url',
+            'user_text',
             'title',
-            'created_at',
-            [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)'), 'vote_count']
+            'created_at'
         ],
         include: [
             {
