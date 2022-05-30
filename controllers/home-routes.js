@@ -8,7 +8,7 @@ router.get('/', (req, res) => {
   Post.findAll({
     attributes: [
       'id',
-      'post_url',
+      'user_text',
       'title',
       'created_at'
     ],
@@ -22,10 +22,12 @@ router.get('/', (req, res) => {
     .then(dbPostData => {
       const posts = dbPostData.map(post => post.get({ plain: true }));
 
-      res.render('homepage', {
-        posts,
-        loggedIn: req.session.loggedIn
-      });
+      res.render('homepage'
+    //   , {
+    //     posts,
+    //     loggedIn: req.session.loggedIn
+    //   }
+      );
     })
     .catch(err => {
       console.log(err);
@@ -41,7 +43,7 @@ router.get('/post/:id', (req, res) => {
     },
     attributes: [
       'id',
-      'post_url',
+      'user_text',
       'title',
       'created_at'
     ],
